@@ -1,1 +1,2 @@
-I have built a Simple Calculator using Html, CSS and JavaScript to perform continuous operations like Addition (+), Subtraction (-), Multiplication (x), Division (/), Square Root (√) and Percentage (%) 
+
+
