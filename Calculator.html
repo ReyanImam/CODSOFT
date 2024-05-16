@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple-Calculator</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th colspan="4"><input type="text" size="18" id="Show" readonly></th>
+        </tr>
+        <tr>
+            <th colspan="4"><div id="smallDisplay"></div></th>
+        </tr>
+        <tr>
+            <th colspan="4" ><input type="text" size="18" id="outcome" readonly></th>
+        </tr>
+        
+        <tr>
+            <td><button onclick="appendoperator('√')" id="OPR">√</button></td>
+            <td><button onclick="appendoperator('%')" id="OPR">%</button></td>
+            <td><button onclick="deleteLast()" id="Bt">Del</button></td>
+            <td><button onclick="reset('')" id="Bt">AC</button></td>
+        </tr>
+
+        <tr>
+            <td><button onclick="appendNumber(7)">7</button></td>
+            <td><button onclick="appendNumber(8)">8</button></td>
+            <td><button onclick="appendNumber(9)">9</button></td>          
+            <td><button onclick="appendoperator('/')" id="OPR">/</button></td>
+
+        </tr>
+
+
+        <tr>
+            <td><button onclick="appendNumber(4)">4</button></td>
+            <td><button onclick="appendNumber(5)">5</button></td>
+            <td><button onclick="appendNumber(6)">6</button></td>
+            <td><button onclick="appendoperator('*')" id="OPR">x</button></td>
+        </tr>
+
+        <tr>
+            <td><button onclick="appendNumber(1)">1</button></td>
+            <td><button onclick="appendNumber(2)">2</button></td>
+            <td><button onclick="appendNumber(3)">3</button></td>
+            <td><button onclick="appendoperator('-')" id="OPR">-</button></td>
+        </tr>
+
+        <tr>
+            <td><button onclick="appendNumber(0)">0</button></td>
+            <td><button onclick="appendNumber('.')">.</button></td>
+            <td><button onclick="calculateResult()" id="equal">=</button></td>
+            <td><button onclick="appendoperator('+')" id="OPR">+</button></td>
+        </tr>
+
+
+
+    </table>
+</body>
+
+<style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 700px;
+            background-color: #f1f3f4;
+        }
+
+    
+    table{
+        border: 4px solid black ;
+        padding: 8px;
+        border-radius: 10px;
+        background-color: #F1F3F4;
+    }
+
+    input{
+        padding: 28px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        border: 3px solid black;
+        border-radius: 8px;
+        font-size: 20px;
+        text-align: left;
+        background-color:#fcf8f8;
+    }
+    
+    #outcome{
+        text-align: right;
+    }
+
+    #smallDisplay {
+    font-size: 14px; /* Adjust font size */
+    color: #000000; /* Adjust color */
+    text-align: left;
+    margin-left: 10px;
+}
+
+    
+    button{
+        padding: 18px;
+        width: 70px;
+        border-radius: 14px;
+        background-color: #2E2E2E;
+        font-size: 20px;
+        transition: background-color 0.5s ease;
+        color: white;
+        border:3px solid black;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        cursor: pointer;
+    }
+    button:active {
+        color: black;
+        transition: color 1ms ease; 
+    }
+    
+    #Bt{
+        background-color: red;
+        border: 3px solid #8B0000;
+    }
+    
+    #Bt:hover{
+        background-color: rgb(211, 8, 8);
+    }
+
+    #OPR{
+        background-color: #797474;
+        border: 3px solid rgb(35, 35, 35);
+    }
+
+    #OPR:hover{
+        background-color: #5C5C5C;
+    }
+
+    #equal{
+        background-color: rgb(255, 0, 225);
+    }
+    button:hover{
+    background-color:#585858;
+    }
+
+
+    
+</style>
+
+<script>
+    
+        let display = document.getElementById('Show');
+        let Outcome=document.getElementById('outcome');
+        let show=document.getElementById('smallDisplay');
+        let firstNumber = '';
+        let secondNumber = '';
+        let operator = '';
+
+
+        function appendNumber(number) {
+            if (operator === '') {
+                firstNumber += number;
+                display.value = firstNumber;
+
+            } 
+            
+            else {
+                secondNumber += number;
+                display.value = firstNumber + ' ' + operator + ' ' +secondNumber;
+                show.value = firstNumber + ' ' + operator + ' ' +secondNumber;
+                
+            }
+        }
+
+     
+        function appendoperator(op) {
+            if (firstNumber !== '') {
+                operator = op;
+                display.value = firstNumber + ' ' +operator;
+            }
+        }
+
+
+
+    function calculateResult() {
+            let result;
+            if (firstNumber !== '' && secondNumber !== '' && operator !== '') {
+                let num1 = parseFloat(firstNumber);
+                let num2 = parseFloat(secondNumber);
+                
+                switch (operator) {
+                    case '+':
+                        result = num1 + num2;   
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        break;
+                    case '/':
+                        result = num1 / num2;
+                        break;
+                    case '%':
+                        result= (num1*100)/num2;
+                        break;
+                    case '√':
+                        result= Math.sqrt(num1);    
+                        break;
+                    default:
+                        break;
+
+                }
+                display.value='';
+                Outcome.value=result;
+                show.textContent = firstNumber + ' ' + operator + ' ' +secondNumber;
+                Lastresult=result;
+                firstNumber=result;
+                secondNumber='';
+                operator=' ';
+
+                
+            }
+            
+        }
+
+        function deleteLast() {
+            if(secondNumber!=''){
+                secondNumber=secondNumber.slice(0,-1);
+                display.value=firstNumber +' '+operator+' '+secondNumber;
+            }
+
+            else if(operator!=''){
+                operator='';
+                display.value=firstNumber;
+            }
+
+            else if(firstNumber!=''){
+                firstNumber=firstNumber.slice(0,-1);
+                display.value=firstNumber;
+            }
+
+            
+
+         
+
+
+        }
+        
+
+    function reset(clear){
+        display.value=" ";
+        firstNumber="";
+        secondNumber="";
+        operator="";
+        Outcome.value="";
+        show.textContent="";
+    }
+    
+</script>
+
+
+</html>
